@@ -13,6 +13,7 @@ sqlalchemy = "^2.0.30"
 pymysql = "^1.1.1"
 ruff = "^0.4.8"
 pytest = "^8.2.2"
+alembic = "^1.13.1"
 
 
 [build-system]
