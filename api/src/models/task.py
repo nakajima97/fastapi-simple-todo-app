@@ -4,6 +4,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Text
 
 from datetime import datetime
 
+
 class Task(Base):
     __tablename__ = "tasks"
 

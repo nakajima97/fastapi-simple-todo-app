@@ -6,6 +6,7 @@ app = FastAPI()
 
 app.include_router(task.router)
 
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
