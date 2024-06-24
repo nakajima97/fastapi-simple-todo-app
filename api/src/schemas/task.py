@@ -1,5 +1,4 @@
 from pydantic import BaseModel, Field
-from datetime import datetime
 
 class TaskCreateResponse(BaseModel):
     result: str = Field(..., example="Task created successfully")
