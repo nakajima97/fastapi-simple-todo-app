@@ -2,7 +2,6 @@ import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-
 @pytest.mark.asyncio
 async def test_post_task(async_client: AsyncSession):
     response = await async_client.post(
