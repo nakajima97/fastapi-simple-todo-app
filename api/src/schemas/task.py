@@ -5,9 +5,7 @@ class TaskCreateResponse(BaseModel):
     result: str = Field(...)
 
     model_config = {
-        "json_schema_extra": {
-            "example": {"result": "Task created successfully"}
-        }
+        "json_schema_extra": {"example": {"result": "Task created successfully"}}
     }
 
 
