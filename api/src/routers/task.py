@@ -6,6 +6,7 @@ from src.schemas.task import TaskCreateResponse, TaskCreateRequest, TaskIndexRes
 from src.models.task import Task
 from src.repositories.task_repository import TaskRepository
 from src.usecases.create_task import CreateTask
+from src.usecases.fetch_all_tasks import FetchAllTasks
 
 router = APIRouter()
 
@@ -21,13 +22,9 @@ async def create_task(task_body: TaskCreateRequest, db: Session = Depends(get_db
 
 @router.get("/tasks", response_model=TaskIndexResponse, tags=["tasks"])
 async def get_tasks(db: Session = Depends(get_db)):
-    # task_repository = TaskRepository(db)
-    # tasks = task_repository.get_all()
+    task_repository = TaskRepository(db)
 
-    # return tasks
-    return {
-        "tasks": [
-                    {"id": 1, "title": "クリーニングに取りに行く", "description": "〇〇クリーニングに取りに行く", "finished_at": None, "created_at": "2024-09-01T00:00:00"},
-                    {"id": 2, "title": "ゴミ捨て", "description": "〇〇ゴミ捨て", "finished_at": "2024-10-01T00:00:00", "created_at": "2024-09-01T00:00:00"},
-                ]
-    }
+    fetch_all_tasks = FetchAllTasks(task_repository)
+    tasks = await fetch_all_tasks.exec()
+
+    return {"tasks": tasks}

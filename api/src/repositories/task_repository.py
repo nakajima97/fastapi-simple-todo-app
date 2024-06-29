@@ -1,4 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql import select
 
 from src.models.task import Task
 
@@ -12,3 +13,7 @@ class TaskRepository:
         await self.session.commit()
         await self.session.refresh(task)
         return task
+
+    async def fetch_all(self):
+        result = await self.session.execute(select(Task))
+        return result.scalars().all()
