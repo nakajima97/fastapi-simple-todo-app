@@ -20,6 +20,7 @@ async def create_task(task_body: TaskCreateRequest, db: Session = Depends(get_db
 
     return {"result": "Task created successfully"}
 
+
 @router.get("/tasks", response_model=TaskIndexResponse, tags=["tasks"])
 async def get_tasks(db: Session = Depends(get_db)):
     task_repository = TaskRepository(db)

@@ -9,6 +9,7 @@ from src.db import get_db
 
 ASYNC_DB_URL = "sqlite+aiosqlite:///:memory:"
 
+
 @pytest_asyncio.fixture
 async def async_session():
     async_engine = create_async_engine(ASYNC_DB_URL, echo=False)
@@ -24,7 +25,7 @@ async def async_session():
 
 
 @pytest_asyncio.fixture
-async def async_client(async_session: AsyncSession): # async_sessionフィクスチャを使う
+async def async_client(async_session: AsyncSession):  # async_sessionフィクスチャを使う
     async def get_test_db():
         yield async_session  # async_sessionをそのまま返す
 

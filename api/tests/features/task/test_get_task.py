@@ -1,11 +1,6 @@
 import pytest
-from httpx import AsyncClient
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models.task import Task
-from src.repositories.task_repository import TaskRepository
-from tests.features.conftest import ASYNC_DB_URL, async_session  # async_sessionをインポート
 
 @pytest.mark.asyncio
 async def test_get_task_empty(async_client: AsyncSession):
@@ -13,6 +8,7 @@ async def test_get_task_empty(async_client: AsyncSession):
 
     assert response.status_code == 200
     assert response.json() == {"tasks": []}
+
 
 # @pytest.mark.asyncio
 # async def test_get_tasks(async_client: AsyncClient, async_session: AsyncSession):
