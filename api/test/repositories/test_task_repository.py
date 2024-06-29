@@ -10,6 +10,7 @@ from src.repositories.task_repository import TaskRepository
 
 ASYNC_DB_URL = "sqlite+aiosqlite:///:memory:"
 
+
 @pytest_asyncio.fixture
 async def async_client():
     async_engine = create_async_engine(ASYNC_DB_URL, echo=False)
