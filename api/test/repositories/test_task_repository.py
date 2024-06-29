@@ -3,7 +3,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 
 from src.models.task import Task  # Taskモデルをインポート
-from src.repositories.task_repository import TaskRepository  # TaskRepositoryをインポート
+from src.repositories.task_repository import (
+    TaskRepository,
+)  # TaskRepositoryをインポート
+
 
 @pytest.fixture
 def session():
@@ -16,6 +19,7 @@ def session():
         yield db
     finally:
         db.close()
+
 
 def test_create_task(session: Session):
     """TaskRepository.create()のテスト"""
