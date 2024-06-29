@@ -1,7 +1,7 @@
 import pytest
 import pytest_asyncio
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine
+from httpx import AsyncClient
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
 from migrations.models import Base
@@ -29,3 +29,8 @@ async def async_client():
 
     async with AsyncClient(app=app, base_url="http://test") as client:
         yield client
+
+@pytest.mark.asyncio
+async def test_post_task(async_client: AsyncSession):
+    response = await async_client.post("/tasks", json={"title": "Test Task", "description": "Test Description"})
+    assert response.status_code == 200
