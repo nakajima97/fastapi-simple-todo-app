@@ -12,7 +12,7 @@ router = APIRouter()
 
 @router.post("/tasks", response_model=TaskCreateResponse, tags=["tasks"])
 async def create_task(task_body: TaskCreateRequest, db: Session = Depends(get_db)):
-    task = Task(**task_body.dict())
+    task = Task(**task_body.model_dump())
 
     task_repository = TaskRepository(db)
     await CreateTask(task_repository).exec(task)
