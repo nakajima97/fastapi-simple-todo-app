@@ -37,3 +37,4 @@ async def test_post_task(async_client: AsyncSession):
         "/tasks", json={"title": "Test Task", "description": "Test Description"}
     )
     assert response.status_code == 200
+    assert response.json() == {"result": "Task created successfully"}
