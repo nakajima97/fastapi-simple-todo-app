@@ -15,6 +15,6 @@ async def create_task(task_body: TaskCreateRequest, db: Session = Depends(get_db
     task = Task(**task_body.dict())
 
     task_repository = TaskRepository(db)
-    CreateTask(task_repository).exec(task)
+    await CreateTask(task_repository).exec(task)
 
     return {"result": "Task created successfully"}
