@@ -5,4 +5,7 @@ class FinishTask:
         self.task_repository = task_repository
 
     async def exec(self, task_id: int) -> None:
-        await self.task_repository.finish_task(task_id)
+        try:
+          await self.task_repository.finish(task_id)
+        except ValueError as e:
+            raise e

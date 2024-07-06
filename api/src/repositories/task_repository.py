@@ -19,13 +19,21 @@ class TaskRepository:
         result = await self.session.execute(select(Task))
         return result.scalars().all()
 
-    async def finish_task(self, task_id: int):
+    async def finish(self, task_id: int):
         '''
         タスクを完了する
         '''
         # 検索対象のタスクを取得する
         result = await self.session.execute(select(Task).filter(Task.id == task_id))
         task = result.scalars().first()
+
+        # タスクが存在しない場合はエラーを返す
+        if task is None:
+            raise ValueError("Task not found")
+
+        # タスクが完了済みだったら何もせずに終了する
+        if task.finished_at is not None:
+            return task
 
         # 値を更新する
         task.finished_at = datetime.now()

@@ -45,6 +45,9 @@ async def finish_task(id: int, db: Session = Depends(get_db)):
     task_repository = TaskRepository(db)
 
     finish_task = FinishTask(task_repository)
-    await finish_task.exec(id)
+    try:
+        await finish_task.exec(id)
+    except ValueError as e:
+        return {"result": "Task not found"}
 
     return {"result": "Task finished successfully"}
