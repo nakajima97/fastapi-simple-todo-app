@@ -7,6 +7,7 @@ from src.models.task import Task
 from src.repositories.task_repository import TaskRepository
 from src.usecases.create_task import CreateTask
 from src.usecases.fetch_all_tasks import FetchAllTasks
+from src.usecases.finish_task import FinishTask
 
 router = APIRouter()
 
@@ -29,3 +30,12 @@ async def get_tasks(db: Session = Depends(get_db)):
     tasks = await fetch_all_tasks.exec()
 
     return {"tasks": tasks}
+
+@router.put("/tasks/{id}/finish", response_model=TaskCreateResponse, tags=["tasks"])
+async def finish_task(id: int, db: Session = Depends(get_db)):
+    task_repository = TaskRepository(db)
+
+    finish_task = FinishTask(task_repository)
+    await finish_task.exec(id)
+
+    return {"result": "Task finished successfully"}
