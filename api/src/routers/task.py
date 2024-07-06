@@ -14,9 +14,9 @@ router = APIRouter()
 
 @router.post("/tasks", response_model=TaskCreateResponse, tags=["tasks"])
 async def create_task(task_body: TaskCreateRequest, db: Session = Depends(get_db)):
-    '''
+    """
     タスクを作成する
-    '''
+    """
     task = Task(**task_body.model_dump())
 
     task_repository = TaskRepository(db)
@@ -27,9 +27,9 @@ async def create_task(task_body: TaskCreateRequest, db: Session = Depends(get_db
 
 @router.get("/tasks", response_model=TaskIndexResponse, tags=["tasks"])
 async def get_tasks(db: Session = Depends(get_db)):
-    '''
+    """
     タスク一覧を取得する
-    '''
+    """
     task_repository = TaskRepository(db)
 
     fetch_all_tasks = FetchAllTasks(task_repository)
@@ -37,17 +37,18 @@ async def get_tasks(db: Session = Depends(get_db)):
 
     return {"tasks": tasks}
 
+
 @router.put("/tasks/{id}/finish", response_model=TaskCreateResponse, tags=["tasks"])
 async def finish_task(id: int, db: Session = Depends(get_db)):
-    '''
+    """
     タスクを完了する
-    '''
+    """
     task_repository = TaskRepository(db)
 
     finish_task = FinishTask(task_repository)
     try:
         await finish_task.exec(id)
-    except ValueError as e:
+    except ValueError:
         return {"result": "Task not found"}
 
     return {"result": "Task finished successfully"}

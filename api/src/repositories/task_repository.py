@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.sql import select, update
+from sqlalchemy.sql import select
 from datetime import datetime
 
 from src.models.task import Task
@@ -20,9 +20,9 @@ class TaskRepository:
         return result.scalars().all()
 
     async def finish(self, task_id: int):
-        '''
+        """
         タスクを完了する
-        '''
+        """
         # 検索対象のタスクを取得する
         result = await self.session.execute(select(Task).filter(Task.id == task_id))
         task = result.scalars().first()
