@@ -22,6 +22,7 @@ async def test_get_tasks(async_client: AsyncClient, dummy_tasks):
     data = response.json()
     assert len(data["tasks"]) == 2
 
+    # enumerateを使ってインデックスとデータを同時に取得
     for i, task_data in enumerate(data["tasks"]):
         assert task_data["title"] == dummy_tasks[i].title
         assert task_data["description"] == dummy_tasks[i].description
