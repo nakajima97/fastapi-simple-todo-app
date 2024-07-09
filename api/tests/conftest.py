@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from migrations.models import Base
 from src.main import app
 from src.db import get_db
+from src.models.task import Task
 
 ASYNC_DB_URL = "sqlite+aiosqlite:///:memory:"
 
@@ -35,3 +36,19 @@ async def async_client(async_session: AsyncSession):  # async_sessionフィク�
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
         yield client
+
+
+@pytest_asyncio.fixture
+async def dummy_tasks(async_session: AsyncSession):
+    """
+    ダミータスクデータを作成するフィクスチャ
+    """
+    task1 = Task(title="Task 1", description="Description 1")
+    task2 = Task(title="Task 2", description="Description 2")
+    async_session.add_all([task1, task2])
+    await async_session.commit()
+
+    # テスト関数で利用できるようにタスクのリストを返す
+    # yieldをfixtureで使うのは一つの慣習
+    # 今回は不要だがクリーンアップ処理をテストでは行うことが多いのでこういった慣習になっている
+    yield [task1, task2]

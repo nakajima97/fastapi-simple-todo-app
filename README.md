@@ -17,3 +17,6 @@ create migration file
   
 execute migration  
 `docker compose exec api poetry run alembic upgrade head`  
+
+# test
+`docker compose exec api poetry run pytest`

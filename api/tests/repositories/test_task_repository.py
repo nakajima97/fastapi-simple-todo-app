@@ -1,34 +1,16 @@
 import pytest
-import pytest_asyncio
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.orm import sessionmaker
 
-from migrations.models import Base
 from src.models.task import Task
 from src.repositories.task_repository import TaskRepository
 
 ASYNC_DB_URL = "sqlite+aiosqlite:///:memory:"
 
 
-@pytest_asyncio.fixture
-async def async_client():
-    async_engine = create_async_engine(ASYNC_DB_URL, echo=False)
-    async_session = sessionmaker(
-        autocommit=False, autoflush=False, bind=async_engine, class_=AsyncSession
-    )
-    async with async_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
-
-    async with async_session() as session:
-        yield session
-
-
 @pytest.mark.asyncio
-async def test_create_task(async_client: AsyncSession):
+async def test_create_task(async_session: AsyncSession):
     task = Task(title="Test Task", description="Test Description")
-    task_repository = TaskRepository(async_client)
+    task_repository = TaskRepository(async_session)
 
     # createメソッドを実行
     created_task = await task_repository.create(task)
@@ -39,7 +21,7 @@ async def test_create_task(async_client: AsyncSession):
     assert created_task.description == "Test Description"
 
     # データベースに保存されているか確認
-    fetched_task = await async_client.get(Task, created_task.id)
+    fetched_task = await async_session.get(Task, created_task.id)
     assert fetched_task is not None
     assert fetched_task.title == "Test Task"
     assert fetched_task.description == "Test Description"
