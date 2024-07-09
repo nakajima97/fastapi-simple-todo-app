@@ -37,6 +37,7 @@ async def async_client(async_session: AsyncSession):  # async_sessionフィク�
     ) as client:
         yield client
 
+
 @pytest_asyncio.fixture
 async def dummy_tasks(async_session: AsyncSession):
     """
