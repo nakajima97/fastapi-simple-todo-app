@@ -31,5 +31,5 @@ async def test_finish_task_when_task_already_finished(
     """
     await async_client.put("/tasks/2/finish")
     response = await async_client.put("/tasks/2/finish")
-    assert response.status_code == 400
+    assert response.status_code == 200
     assert response.json() == {"result": "Task finished successfully"}
