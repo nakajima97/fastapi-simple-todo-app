@@ -33,10 +33,17 @@ def get_current_user(cred: HTTPAuthorizationCredentials = Depends(HTTPBearer()))
         )
     return cred
 
-@router.get("/auth/me", tags=tags, )
+@router.get("/auth/me", tags=tags, summary="ログインユーザ情報取得")
 async def get_me(cred = Depends(get_current_user)):
     '''
     ログインしているユーザの情報を返す
     '''
     uid = cred.get("uid")
     return {"message": f"Hello, {uid}!"}
+
+@router.post('/auth/sign_in', tags=tags, summary="ユーザ登録")
+async def sign_in():
+    '''
+    ユーザ登録する
+    '''
+    return {"message": "sign in success"}
