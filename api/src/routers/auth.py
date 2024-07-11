@@ -13,6 +13,8 @@ credentials_path = os.getenv("FIREBASE_SECRETS_PATH")
 credentials = credentials.Certificate(credentials_path)
 firebase_admin.initialize_app(credentials)
 
+tags = ["auth"]
+
 # 認証関数の定義
 def get_current_user(cred: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
     if not cred:
@@ -31,7 +33,10 @@ def get_current_user(cred: HTTPAuthorizationCredentials = Depends(HTTPBearer()))
         )
     return cred
 
-@router.get("/auth/me")
+@router.get("/auth/me", tags=tags, )
 async def get_me(cred = Depends(get_current_user)):
+    '''
+    ログインしているユーザの情報を返す
+    '''
     uid = cred.get("uid")
     return {"message": f"Hello, {uid}!"}
