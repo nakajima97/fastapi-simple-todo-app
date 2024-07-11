@@ -46,4 +46,8 @@ async def sign_in():
     '''
     ユーザ登録する
     '''
+    # TODO: ユーザテーブルにユーザ情報を登録する処理を書く
+    # TODO: すでに登録されているユーザの場合はエラーを返す
+    # TODO: モデル・マイグレーションファイルの作成からやる
+
     return {"message": "sign in success"}
