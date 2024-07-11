@@ -51,3 +51,12 @@ async def sign_in():
     # TODO: モデル・マイグレーションファイルの作成からやる
 
     return {"message": "sign in success"}
+
+@router.post('/auth/login', tags=tags, summary="ログイン")
+async def login():
+    '''
+    ログインする
+    '''
+    # TODO: ユーザが登録されているか確認する処理を書く
+    # TODO: ユーザが登録されていなければエラーを返す
+    # TODO: ログイン成功時にトークンを返す処理を書く
