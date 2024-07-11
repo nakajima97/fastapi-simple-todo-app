@@ -41,7 +41,7 @@ async def get_me(cred = Depends(get_current_user)):
     uid = cred.get("uid")
     return {"message": f"Hello, {uid}!"}
 
-@router.post('/auth/sign_in', tags=tags, summary="ユーザ登録")
+@router.post('/auth/sign_up', tags=tags, summary="ユーザ登録")
 async def sign_in():
     '''
     ユーザ登録する
@@ -50,7 +50,7 @@ async def sign_in():
     # TODO: すでに登録されているユーザの場合はエラーを返す
     # TODO: モデル・マイグレーションファイルの作成からやる
 
-    return {"message": "sign in success"}
+    return {"message": "Sign in success"}
 
 @router.post('/auth/login', tags=tags, summary="ログイン")
 async def login():
@@ -60,3 +60,4 @@ async def login():
     # TODO: ユーザが登録されているか確認する処理を書く
     # TODO: ユーザが登録されていなければエラーを返す
     # TODO: ログイン成功時にトークンを返す処理を書く
+    return {"message": "Login success"}
