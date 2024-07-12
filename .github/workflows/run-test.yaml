@@ -23,6 +23,10 @@ jobs:
           pip install poetry
           poetry install --no-root
 
+      - name: Create Firebase service account key file
+        run: |
+          echo "${{ secrets.FIREBASE_ADMIN_SDK_JSON }}" > ${{ secrets.FIREBASE_SECRETS_PATH }}
+
       - name: Run API test
         run: |
           poetry run pytest
