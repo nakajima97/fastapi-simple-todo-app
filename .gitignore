@@ -162,3 +162,7 @@ cython_debug/
 #.idea/
 
 mysql
+
+# 秘密鍵情報
+secrets/
+!secrets/.gitkeep

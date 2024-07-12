@@ -1,5 +1,8 @@
 on: [pull_request]
 
+env:
+  FIREBASE_SECRETS_PATH: ${{ secrets.FIREBASE_SECRETS_PATH }}
+
 jobs:
   run-linter:
     runs-on: ubuntu-latest
