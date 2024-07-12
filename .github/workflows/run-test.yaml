@@ -25,7 +25,7 @@ jobs:
 
       - name: Create Firebase service account key file
         run: |
-          echo "${{ secrets.FIREBASE_ADMIN_SDK_JSON }}" > ${{ vars.FIREBASE_SECRETS_PATH }}
+          echo ${{ vars.FIREBASE_SECRETS_PATH }}
 
       - name: Run API test
         run: |
